@@ -1,0 +1,30 @@
+db
+use dbs
+
+db.createCollection("Customer_info")
+
+db.Customer_info.insert({id:1,name:"AAA",City:"Satara",Status:"A",Amount:5000});
+db.Customer_info.insert({id:1,name:"BBB",City:"Pune",Status:"A",Amount:7000});
+db.Customer_info.insert({id:2,name:"CCC",City:"Pune",Status:"B",Amount:2000});
+db.Customer_info.insert({id:2,name:"DDD",City:"Solapur",Status:"B",Amount:2000});
+db.Customer_info.insert({id:3,name:"EEE",City:"Thane",Status:"A",Amount:6000});
+db.Customer_info.insert({id:3,name:"FFF",City:"Nagpur",Status:"A++",Amount:10000});
+db.Customer_info.insert({id:4,name:"GGG",City:"Nanded",Status:"A++",Amount:15000});
+db.Customer_info.insert({id:4,name:"HHH",City:"Sangvi",Status:"B++",Amount:20000});
+db.Customer_info.insert({id:5,name:"III",City:"Mumbai",Status:"B++",Amount:25000});
+db.Customer_info.insert({id:6,name:"JJJ",City:"Latur",Status:"C",Amount:5000});
+
+db.Customer_info.find().pretty()
+
+db.Customer_info.mapReduce(function () {emit(this.id, this.Amount);}, function (key, values) {return Array.sum(values);}, { query: { Status: "A" }, out: "order_totals" })
+
+db.order_totals.find().pretty()
+
+db.Customer_info.mapReduce(function () {emit(this.id, this.Amount);}, function (key, values) {return Array.sum(values);}, { query: { Status: "B" }, out: "order_total" })
+
+db.order_total.find().pretty()
+
+db.Customer_info.mapReduce(function () {emit(this.id, this.Amount);}, function (key, values) {return Array.sum(values);}, { query: { Status: "A++" }, out: "order_tot" })
+
+db.order_tot.find().pretty()
+

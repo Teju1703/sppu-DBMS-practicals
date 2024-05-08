@@ -1,0 +1,83 @@
+create database pr5;
+
+use pr5
+
+create table result(roll_no int Primary key,name varchar(20),class varchar(20));
+
+insert into result (roll_no,name)values(1,"A"),(2,"B"),(3,"C"),(4,"D");
+
+select * from result;
+
+
+create table stud_marks(roll_no int,total_marks int,foreign key(roll_no)references result(roll_no));
+
+insert into stud_marks values(1,870),(2,1455),(3,987),(4,1200);
+
+select * from stud_marks;
+
+
+delimiter $$
+create procedure proc_Grade(IN Roll int)
+begin
+declare marks int default 0;
+declare grade varchar(50);
+select s.total_marks into marks from stud_marks s where s.Roll_no=Roll;
+if marks<=1500 AND marks>=990 then
+set grade="Distinction";
+elseif marks<990 AND marks>=899
+then set grade="First Class";
+elseif marks<899 AND marks>=825
+then set grade="Second Class";
+END if;
+update result set class=grade where Roll_no=Roll ;
+END
+$$
+
+
+delimiter ;
+call proc_Grade(4);
+
+select * from result;
+
+call proc_Grade(3);
+
+select * from result;
+
+call proc_Grade(2);
+
+select * from result;
+
+call proc_Grade(1);
+
+select * from result;
+
+
+delimiter //
+create function fun_Grade(Roll int)
+returns varchar(20)
+DETERMINISTIC
+begin
+declare grade varchar(20);
+declare marks int default 0;
+select s.total_marks into marks from stud_marks s where s.Roll_no=Roll;
+if marks<=1500 AND marks>=990 then
+set grade="Distinction";
+elseif marks<990 AND marks>899 then
+set grade="First class";
+elseif marks<899 AND marks>=825 then
+set grade="Second class";
+End if;
+return grade;
+End ;
+//
+
+
+delimiter ;
+select fun_Grade(3);
+
+select fun_Grade(2);
+
+select fun_Grade(1);
+
+select fun_Grade(4);
+

@@ -1,0 +1,49 @@
+create database pr3;
+
+use pr3;
+
+create table Emp(Eid int,fname varchar(10),lname varchar(10),hdate date,jtitle varchar(10),mid int, did int);
+
+alter table Emp add salary int;
+
+insert into Emp values(1,'A','m','2022-01-01','manager',2,1,60000);
+
+insert into Emp values(2,'k','S','2022-02-15','analyst',1,1,55000),(3,'A','T','2022-03-20','manager',4,2,65000),(4,'V','P','2022-04-10','analyst',3,2,62000);
+
+select * from Emp;
+
+create table Department(Did int , dname varchar(10),Mid int,lid int);
+
+insert into Department values(1,'HR',1,101),(2,'IT',3,102);
+
+select * from Department;
+
+create table location(Lid int,Street varchar(10),pcode int,city varchar(10),state varchar(10),country varchar(5));
+
+insert into location values(101,'main st',12345,'new york','NY','US'),(102,'Elm st',67890,'San','CA','US');
+
+select * from location;
+
+select fname,lname,salary from Emp where salary > (select salary from Emp where lname='S');
+
+select e.fname,e.lname from Emp e join Department d ON e.did=d.Did join location l On d.lid=l.Lid where e.mid is not null and l.country='US';
+
+select fname,lname from Emp where did=(select Did from Department where dname='IT');
+
+select fname, lname,salary from Emp where salary > (select avg(salary) from Emp);
+
+select fname,lname,salary from Emp where salary >(select avg(salary) from Emp) and did=(select Did from department where dname='IT');
+
+select fname,lname,salary from Emp where salary = (select min(salary) from Emp);
+
+select e.Eid,e.fname,e.lname from Emp e where (select avg(salary) from Emp where e.did=Did);
+
+select e.Eid,e.fname,e.lname,e.salary from Emp e where salary > (select AVG(salary) from Emp where e.did=Did);
+
+select Eid,fname,mid from Emp ;
+
+select fname,hdate from Emp where hdate>(select hdate from Emp where lname='s');
+
+select d.dname,count(e.Eid) as total from Department d left join Emp e on d.Did=e.did group by d.dname;
+
+

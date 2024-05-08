@@ -1,0 +1,33 @@
+create database pr7;
+use pr7;
+
+create table WC(id int not null,name varchar(10) not null,capacity int not null);
+
+create table WCS(total_cap int not null);
+
+delimiter $$
+create trigger work_insert
+before insert on WC
+for each row
+begin
+declare rc int;
+select count(*) into rc from WCS;
+if rc>0 then
+update WCS set total_cap=total_cap+new.capacity;
+else
+insert into WCS (total_cap) values(new.capacity);
+end if;
+end;$$
+
+delimiter ;
+insert into Wc values(1,'AAA',20);
+
+select * from WC;
+
+select * from WCS;
+
+insert into WC values (2,'BBB',80),(3,'CCC',170);
+
+select * from WC;
+
+select * from WCS;

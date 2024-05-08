@@ -1,0 +1,50 @@
+create database pr2b;
+
+use pr2b;
+
+create table employee(e_id int,fname varchar(10),lname varchar(10),salary int,doj date,dept varchar(10));
+
+insert into employee values(1,'Ram','AAA',35000,'2022-09-23','HR'),(2,'Sham','BBB',38000,'2022-10-02','testing'),(3,'varun','CCC',25000,'2022-01-23','Developer'),(4,'amar','DDD',32000,'2023-04-03','developer'),(5,'ravi','EEE',31000,'2023-04-13','developer'),(6,'ashu','FFF',31000,'2022-09-29','HR'),(7,'vaishu','GGG',40000,'2023-10-02','testing'),(8,'vinita','HHH',25000,'2023-01-23','Developer'),(9,'Rutuja','III',20000,'2023-04-01','HR'),(10,'nilam','JJJ',43000,'2023-02-13','developer');
+
+select * from employee;
+
+
+select fname,lname from employee;
+
+select distinct dept from employee;
+
+select fname,year(doj) as join_year,month(doj) as join_month,day(doj) as join_day from employee;
+
+select * from employee order by salary asc;
+
+select * from employee where fname like 'A%';
+
+update employee set salary=salary+5000 where salary < 20000;
+
+select * from employee;
+
+delete from employee where e_id=4;
+
+select * from employee;
+
+select dept,min(salary) as min_sal from employee group by dept;
+
+select dept,avg(salary) as avg_sal from employee group by dept order by avg_sal asc;
+
+
+create table emp1(e_id int,e_name varchar(10),city varchar(10),company varchar(20),sal int);SS
+
+insert into emp1 values(101,'AAA','pune','ibm',45000),(102,'BBB','pune','infosys',40000),(103,'CCC','mumbai','infosys',35000),(104,'DDD','nashik','iit',25000);
+
+select * from emp1;
+
+select * from emp1 where company='ibm' and city='pune';
+
+select e_name,city from emp1 where company='infosys' or sal>30000;
+
+select * from emp1 where company='ibm' and city <> 'mumbai';
+
+select company,max(sal) as max_sal from emp1 group by company;
+
+select company from emp1 where sal > (select avg(sal) from emp1 where company='ibm');
+

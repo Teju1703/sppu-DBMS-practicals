@@ -1,0 +1,81 @@
+create database PR2a;
+
+use PR2a;
+
+create table student(s_id int,s_name varchar(10),s_addr varchar(20),marks int);
+
+insert into student values(101,'A','Ravet',550),(102,'K','Kiwale',580),(103,'A','Akurdi',560),(104,'v','Maval',575),(105,'V','Kalewadi',530);
+
+select * from student;
+
+create table employee(e_id int,e_name varchar(10),e_addr varchar(20),salary int,doj date,dep varchar(10));
+
+insert into employee values(1,'Ram','AAA',35000,'2022-09-23','HR'),(2,'Sham','BBB',38000,'2022-10-02','testing'),(3,'varun','CCC',20000,'2022-01-23','Developer'),(4,'atharva','DDD',25000,'2023-01-01','HR'),(5,'ravi','EEE',31000,'2023-04-13','developer');
+
+select * from employee;
+
+create table weather(c_id varchar(5),c_name varchar(10),min_t int,max_t int);
+
+insert into weather values('c1','Pune',28,41),('c2','Mumbai',32,43),('c3','Thane',29,42);
+
+select * from weather;
+
+alter table student 
+modify s_id int NOT NULL,
+modify s_name varchar(10) NOT NULL,
+modify s_addr varchar(20) NOT NULL,
+modify marks int NOT NULL;
+
+alter table employee 
+modify e_id int NOT NULL,
+modify e_name varchar(10) not null, 
+modify e_addr varchar(20) not null,
+modify salary int not null,
+modify doj date not null,
+modify dep varchar(10) not null;
+
+alter table student add primary key (s_id);
+
+create view Joininginfo as select e_id,e_name,doj from employee;
+
+select * from Joininginfo;
+
+create index ind1 on student(s_id);
+create index ind1 on employee(e_id);
+create index ind1 on weather(c_id);
+
+create view markinfo as select s_id,marks from student;
+
+select * from markinfo;
+
+alter table weather rename to weatherdata;
+
+alter table weatherdata drop c_name;
+
+select * from weatherdata;
+
+alter table student add grad varchar(10);
+
+select * from student;
+
+update student set grad='Dest' where s_id=101;
+update student set grad='Dest' where s_id=102;
+update student set grad='firs' where s_id=103;
+update student set grad='dest' where s_id=104;
+update student set grad='dest' where s_id=105;
+
+select * from student;
+
+create view distab as select * from student where grad='dest';
+
+select * from distab;
+
+alter table student modify s_id int auto_increment;
+
+insert into student (s_name,s_addr,marks,grad) values('n','parandwadi',560,'firs');
+
+
+call sys.create_synonym_db('pr2a','assig2');
+
+show databases;
+

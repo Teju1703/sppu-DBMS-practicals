@@ -1,0 +1,53 @@
+use k1
+
+create table Borrower(Rollin int(20), Name varchar(20), DOI date, NOB varchar(20), Status varchar(20));
+
+insert into Borrower values(101, 'AAAA', '2023-10-01', 'DBMS', 'I'),(102, 'BBBB', '2023-01-15', 'TOC', 'I'),(103, 'CCCC', '2023-09-20', 'CN', 'I'),(104, 'DDDD', '2023-09-30', 'SPM', 'I');
+
+select * from Borrower;
+
+create table Fine(Rollno int(20), Date date, Amount int(20));
+
+select * from Fine;
+
+
+delimiter $
+create procedure A1(Rollno int(20), name varchar(20))
+begin
+declare ldate date;
+declare fine int(20);
+declare day int(20);
+select DOI into ldate from Borrower where Rollin=Rollno and NOB=name;
+set day = DATEDIFF(CURDATE(), ldate);
+IF(day>=15 and day<=30) then
+set fine=day*5;
+ELSEIF(day>30) then
+set fine=day*50;
+end IF;
+update Borrower set Status='R' where Rollin=Rollno and NOB=name;
+IF(fine is not null) then
+insert into Fine values(Rollno, CURDATE(), fine);
+end IF;
+end $
+
+call A1(101, 'DBMS')$
+
+select * from Fine;$
+
+call A1(102, 'TOC')$
+
+select * from Fine$
+
+call A1(103, 'CN')$
+
+select * from Fine$
+
+select * from Borrower;$
+
+call A1(104, 'SPM')$
+
+select * from Fine$
+
+select * from Borrower$
+
+

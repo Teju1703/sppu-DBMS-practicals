@@ -1,0 +1,51 @@
+db
+use mydbs
+
+db.createCollection("Teacher_info")
+
+db.Teacher_info.insert({first_name:"AAAA",last_name:"BBBB",age:21,address:"Nigdi"})
+db.Teacher_info.insert({first_name:"CCCC",last_name:"DDDD",age:21,address:"Ravet"})
+db.Teacher_info.insert({first_name:"EEEE",last_name:"FFFF",age:21,address:"Aundh"})
+db.Teacher_info.insert({first_name:"GGGG",last_name:"HHHH",age:21,address:"Pimpri"})
+db.Teacher_info.insert({first_name:"IIII",last_name:"JJJJ",age:32,address:"Dehu"})
+db.Teacher_info.insert({first_name:"KKKK",last_name:"LLLL",age:23,address:"Hadpsar"})
+db.Teacher_info.insert({first_name:"MMMM",last_name:"NNNN",age:36,address:"Akurdi"})
+db.Teacher_info.insert({first_name:"OOOO",last_name:"PPPP",age:26,address:"Katraj"})
+db.Teacher_info.insert({first_name:"QQQQ",last_name:"RRRR",age:25,address:"Kiwale"})
+db.Teacher_info.insert({first_name:"SSSS",last_name:"TTTT",age:24,address:"Rawet"})
+
+db.Teacher_info.find().pretty()
+
+db.Teacher_info.find()
+
+db.Teacher_info.find().limit(2).pretty()
+
+db.Teacher_info.find().skip(4).pretty()
+
+db.Teacher_info.find({age:25}).pretty()
+
+db.Teacher_info.find().sort({first_name:1}).pretty()
+
+db.Teacher_info.find().sort({first_name:-1}).pretty()
+
+db.Teacher_info.update({last_name:"HHHH"},{$set:{last_name:"ZZZZ"}})
+
+db.Teacher_info.find().pretty()
+
+db.Teacher_info.update({last_name:"PPPP"},{$set:{last_name:"YYYY"}})
+
+db.Teacher_info.remove({last_name:"RRRR"})
+
+db.Teacher_info.remove({last_name:"DDDD"})
+
+db.Teacher_info.find().pretty()
+
+db.Teacher_info.find({$and: [{first_name: "GGGG"}, {age: 21}]}).pretty()
+
+db.Teacher_info.find({$or: [{first_name: "AAAA"}, {age: 21}]}).pretty()
+
+db.Teacher_info.find({$nor :[{age:21},{first_name:'OOOO'}]}).pretty()
+
+db.Teacher_info.save({first_name:"YYYY",last_name:"SASA",age:19,address:"Akurdi"})
+
+db.Teacher_info.find().pretty()

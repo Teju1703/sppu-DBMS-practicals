@@ -1,0 +1,44 @@
+create database pr6;
+use pr6
+
+create table emp(eno int,ename varchar(10),city varchar(20),salary int);
+
+insert into emp values(1,'AAA','pune',5000);
+insert into emp values(2,'BBB','mumbai',3000);
+insert into emp values(3,'CCC','nashik',5000);
+insert into emp values(4,'DDD','pune',8000);
+insert into emp values(5,'EEE','mumbai',7000);
+insert into emp values(6,'FFF','mumbai',3000);
+
+select * from emp;
+
+delimiter //
+create procedure sal_cur2()
+begin
+declare var_eno int;
+declare var_sal int;
+declare exit_loop boolean default false;
+declare c1 cursor for select eno,salary from emp;
+declare continue handler for not found set exit_loop =true;
+open c1;
+emp_loop:loop
+fetch c1 into var_eno,var_sal;
+if exit_loop then
+leave emp_loop;
+end if;
+if var_sal>4000 then
+update emp set salary=var_sal+5000 where eno=var_eno;
+else
+update emp set salary=var_sal+1000 where eno=var_eno;
+end if;
+end loop emp_loop;
+close c1;
+end //
+
+delimiter ;
+select * from emp;
+
+call sal_cur2();
+
+select * from emp;
+

@@ -1,0 +1,45 @@
+db
+use my1
+
+db.createCollection("Teacher1_info");
+
+db.Teacher1_info.insert({name:"aaaa",id:1,Status:"A",Dept_name:"Computer",Sal:35000})
+db.Teacher1_info.insert({name:"bbbb",id:2,Status:"A",Dept_name:"Computer",Sal:35000})
+db.Teacher1_info.insert({name:"cccc",id:3,Status:"B",Dept_name:"Computer",Sal:40000})
+db.Teacher1_info.insert({name:"dddd",id:11,Status:"A",Dept_name:"Mechanical",Sal:45000})
+db.Teacher1_info.insert({name:"eeee",id:13,Status:"B",Dept_name:"Mechanical",Sal:35000})
+db.Teacher1_info.insert({name:"Shinde",id:14,Status:"A",Dept_name:"Mechanical",Sal:55000})
+db.Teacher1_info.insert({name:"Manisha",id:111,Status:"A",Dept_name:"IT",Sal:35000})
+db.Teacher1_info.insert({name:"thombre",id:15,Status:"A",Dept_name:"Mechanical",Sal:45000})
+db.Teacher1_info.insert({name:"Bhegde",id:6,Status:"A",Dept_name:"Computer",Sal:65000})
+db.Teacher1_info.insert({name:"Priya",id:112,Status:"A",Dept_name:"IT",Sal:25000})
+
+db.Teacher1_info.find().pretty();
+
+db.Teacher1_info.count()
+
+db.Teacher1_info.distinct('name')
+
+db.Teacher1_info.estimatedDocumentCount()
+
+db.Teacher1_info.aggregate([{'$sort':{'id':1}}])
+
+db.Teacher1_info.aggregate({$group:{ _id:"$Dept_name",Total:{$sum:1}}})
+
+db.Teacher1_info.aggregate({$group:{ _id:"$Dept_name",Total:{$sum:"$Sal"}}})
+
+db.Teacher1_info.aggregate([{$match:{Status:"A"}},{$group:{_id:"$Dept_name",Total:{$sum:"$Sal"}}}])
+
+db.Teacher1_info.ensureIndex({"name":1});
+
+db.Teacher1_info.getIndexes();
+
+db.Teacher1_info.dropIndex("name_1");
+
+db.Teacher1_info.ensureIndex({"name":1},{unique:true});
+
+db.Teacher1_info.getIndexes();
+
+db.Teacher1_info.dropIndex({"name":1},{unique:true});
+
+
